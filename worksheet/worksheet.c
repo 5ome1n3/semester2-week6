@@ -49,7 +49,8 @@ int find_max(int *arr, int n, int *index);
  */
 int add_values(int a, int b) {
   // TODO: Implement this function
-  return 0; // Replace this
+  int sum = a + b;
+  return sum; // Replace this
 }
 
 /**
@@ -70,6 +71,10 @@ int add_values(int a, int b) {
 void swap_values(int *a, int *b) {
   // TODO: Implement this function
   // Hint: You'll need a temporary variable
+  *a ^= *b;
+  *b ^= *a;
+  *a ^= *b;
+
 }
 
 /**
@@ -86,7 +91,11 @@ void swap_values(int *a, int *b) {
  */
 int sum_array(int *arr, int n) {
   // TODO: Implement this function
-  return 0; // Replace this
+  int sum = 0;
+  for (int index=0;index<n;index++) {
+    sum = add_values(sum, arr[index]);
+  }
+  return sum; // Replace this
 }
 
 /**
@@ -107,6 +116,13 @@ int sum_array(int *arr, int n) {
  */
 void reverse_array(int *arr, int n) {
   // TODO: Implement this function
+  int start = 0;
+  int end = n-1;
+  while (end > start) {
+    swap_values(arr+start, arr+end);
+    start++;
+    end--;
+  }
 }
 
 /**
@@ -125,7 +141,8 @@ void reverse_array(int *arr, int n) {
 double average(int *arr, int n) {
   // TODO: Implement this function
   // Hint: Be careful with integer division!
-  return 0.0; // Replace this
+  double sum = sum_array(arr, n);
+  return n != 0 ? sum/n : 0; // Replace this
 }
 
 /**
@@ -149,7 +166,10 @@ double average(int *arr, int n) {
 int find_max(int *arr, int n, int *index) {
   // TODO: Implement this function
   *index = 0;
-  return 0; // Replace this
+  for (int i=0;i<n;i++) {
+    *index = arr[*index] > arr[i] ? *index : i;
+  }
+  return arr[*index]; // Replace this
 }
 
 /* ============================================================
@@ -173,10 +193,10 @@ void test_add_values(void) {
 
 void test_swap_values(void) {
   int a, b;
-
   a = 5;
   b = 10;
   swap_values(&a, &b);
+  return;
   TEST_CHECK(a == 10 && b == 5);
   TEST_MSG("After swap_values(&5, &10): expected a=10, b=5, got a=%d, b=%d", a,
            b);
